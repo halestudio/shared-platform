@@ -14,6 +14,12 @@ platform {
 	
 	// individual bundle configurations
 	
+	bnd 'joda-time:joda-time', {
+		// modify Joda to export some packages that by default are private, e.g. joda.time.base
+		instruction 'Export-Package', "!org.joda.time.tz.*,*;version=$version"
+		instruction 'Private-Package', 'org.joda.time.tz.*'
+	}
+	
 	bnd 'jdom:jdom', {
 		optionalImport(
 			'oracle.xml.parser',
@@ -21,6 +27,27 @@ platform {
 			'org.jaxen;resolution',
 			'org.jaxen.jdom'
 		)
+	}
+	
+	bnd 'dom4j:dom4j', {
+		optionalImport(
+			'org.gjt.xpp',
+			'org.jaxen',
+			'org.jaxen.*',
+			'org.relaxng.datatype'
+		)
+	}
+	
+	bnd 'org.apache.velocity:velocity', {
+		optionalImport 'com.werken.xpath', 'org.apache.log', 'org.apache.log.*'
+	}
+	
+	bnd 'org.apache.xmlbeans:xmlbeans', {
+		optionalImport 'org.apache.crimson.jaxp'
+	}
+	
+	bnd 'org.codehaus.castor:castor-xml', {
+		optionalImport 'netscape.ldap', 'org.apache.regexp'
 	}
 	
 	bnd 'net.sf.ehcache:ehcache-core', {
