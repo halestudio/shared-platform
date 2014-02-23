@@ -1,15 +1,15 @@
 /**
  * Adds a combined geotools bundle and an opengis bundle to the platform.
  */
-def geotools(String geotoolsVersion = '10.4', String bundleVersion = geotoolsVersion + '.0.combined',
-	def modules = [
+def geotools(String geotoolsVersion = '10.4',
+	List<String> modules = [
 		'gt-api',
 		'gt-cql',
 		'gt-epsg-hsql',
 		'gt-geojson',
 		'gt-main',
 		'gt-shapefile'
-	]) {
+	], String bundleVersion = geotoolsVersion + '.0.combined') {
 	
 	repositories {
 		maven {
@@ -41,7 +41,7 @@ def geotools(String geotoolsVersion = '10.4', String bundleVersion = geotoolsVer
 		// geotools bundle
 		merge {
 			match {
-				it.group == 'org.geotools' && it.name != 'gt-opengis'
+				it.group != null && it.group.startsWith('org.geotools') && it.name != 'gt-opengis'
 			}
 			
 			bnd {
