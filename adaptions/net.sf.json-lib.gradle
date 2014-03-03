@@ -1,0 +1,5 @@
+platform {
+	bnd(group: 'net.sf.json-lib', name: 'json-lib') {
+		optionalImport 'nu.xom', 'org.apache.oro.text.regex'
+	}
+}

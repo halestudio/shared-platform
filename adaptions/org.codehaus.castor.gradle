@@ -1,0 +1,5 @@
+platform {	
+	bnd 'org.codehaus.castor:castor-xml', {
+		optionalImport 'netscape.ldap', 'org.apache.regexp'
+	}
+}

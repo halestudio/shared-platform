@@ -1,0 +1,1 @@
+Configurations in this directory make adaptions to bnd configurations for dependencies, they don't add dependencies. By convention files are named after the group ID of the configured dependencies.

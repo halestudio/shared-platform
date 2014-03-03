@@ -1,5 +1,9 @@
 /**
  * Adds a combined geotools bundle and an opengis bundle to the platform.
+ * 
+ * @param geotoolsVersion version of Geotools dependencies
+ * @param modules the list of geotools modules to add (in group org.geotools)
+ * @param bundleVersion a version for the merged bundle
  */
 def geotools(String geotoolsVersion = '10.4',
 	List<String> modules = [

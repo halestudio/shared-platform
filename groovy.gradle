@@ -1,3 +1,11 @@
+/**
+ * Add groovy-all as dependency and ensure that it is used instead of the
+ * individual groovy modules.
+ * 
+ * @param groovyVersion the groovy artifact version
+ * @param addDependency if the dependency to groovy-all should be added
+ * @param customName a custom name for the created bundle
+ */
 def groovyAll(String groovyVersion = '2.1.5', boolean addDependency = true, String customName = null) {
 	configurations {
 		platform {

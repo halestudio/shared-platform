@@ -1,0 +1,7 @@
+platform {
+	bnd 'joda-time:joda-time', {
+		// modify Joda to export some packages that by default are private, e.g. joda.time.base
+		instruction 'Export-Package', "!org.joda.time.tz.*,*;version=$version"
+		instruction 'Private-Package', 'org.joda.time.tz.*'
+	}
+}

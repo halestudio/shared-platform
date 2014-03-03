@@ -1,0 +1,10 @@
+platform {
+	bnd 'dom4j:dom4j', {
+		optionalImport(
+			'org.gjt.xpp',
+			'org.jaxen',
+			'org.jaxen.*',
+			'org.relaxng.datatype'
+		)
+	}
+}

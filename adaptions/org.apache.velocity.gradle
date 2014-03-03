@@ -1,0 +1,5 @@
+platform {
+	bnd 'org.apache.velocity:velocity', {
+		optionalImport 'com.werken.xpath', 'org.apache.log', 'org.apache.log.*'
+	}
+}

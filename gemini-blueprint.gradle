@@ -1,0 +1,43 @@
+interface Const {
+	static final String DEF_VERSION = '1.0.0.RELEASE' 
+}
+
+/**
+ * Add default gemini blueprint modules.
+ */
+def modules(String version = Const.DEF_VERSION, List<String> modules = [
+	'gemini-blueprint-core',
+	'gemini-blueprint-extender',
+	'gemini-blueprint-io'
+]) {
+	String group = 'org.eclipse.gemini.blueprint'
+	
+	repositories {
+		maven {
+			url 'http://artifactory.esdi-humboldt.eu:8070/artifactory/repo/'
+		}
+	}
+	
+	platform {
+		modules.each {
+			bundle group: group, name: it, version: version, {
+				transitive = false // dependencies are messed up
+			}
+		}
+	}
+}
+
+/**
+ * Add all gemini blueprint modules.
+ */
+def all(String version = Const.DEF_VERSION) {
+	modules(version, [
+		'gemini-blueprint-core',
+		'gemini-blueprint-extender',
+		'gemini-blueprint-io',
+		'gemini-blueprint-mock',
+		'gemini-blueprint-test'
+	])
+}
+
+modules()

@@ -1,8 +1,13 @@
-/*
+interface Const {
+	static final String DEF_VERSION = '3.1.1.RELEASE'
+	static final String SPRING_GROUP = 'org.springframework'
+}
+
+/**
  * Include Spring core bundles and ensure a common version for spring bundles.
  */
-def springCore(String springVersion = '3.1.1.RELEASE') {
-	def springGroup = 'org.springframework'
+def springCore(String springVersion = Const.DEF_VERSION) {
+	def springGroup = Const.SPRING_GROUP
 	
 	configurations {
 		platform {
@@ -23,11 +28,15 @@ def springCore(String springVersion = '3.1.1.RELEASE') {
 	}
 }
 
-/*
+/**
  * Add spring core and a set of default bundles to the platform.
  */
-def spring(String springVersion = '3.1.1.RELEASE') {
-	def springGroup = 'org.springframework'
+def spring(String springVersion = Const.DEF_VERSION, List<String> modules = [
+	'spring-beans',
+	'spring-context',
+	'spring-context-support'
+]) {
+	def springGroup = Const.SPRING_GROUP
 	springCore(springVersion)
 	
 	/*
@@ -35,8 +44,8 @@ def spring(String springVersion = '3.1.1.RELEASE') {
 	 * given (even though for each dependency a fixed version should be applied via springCore(...))
 	 */
 	platform {
-		bundle group: springGroup, name: 'spring-beans', version: springVersion
-		bundle group: springGroup, name: 'spring-context', version: springVersion
-		bundle group: springGroup, name: 'spring-context-support', version: springVersion
+		modules.each {
+			bundle group: springGroup, name: it, version: springVersion
+		}
 	}
 }

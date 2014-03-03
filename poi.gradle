@@ -1,4 +1,6 @@
-// Apache POI
+/**
+ * Create a merged apache POI bundle.
+ */
 def poi(poiVersion = '3.9') {
 	platform {
 		merge(failOnDuplicate: false) {
@@ -10,7 +12,8 @@ def poi(poiVersion = '3.9') {
 				symbolicName = 'org.apache.poi'
 				bundleName = 'Apache POI'
 				version = poiVersion
-				instruction 'Import-Package', '!schemasMicrosoftComOfficePowerpoint,!schemasMicrosoftComOfficeWord,!org.openxmlformats.*,!org.apache.poi.*,org.apache.xmlbeans.impl.schema,*'
+				instruction 'Import-Package',
+					'!schemasMicrosoftComOfficePowerpoint,!schemasMicrosoftComOfficeWord,!org.openxmlformats.*,!org.apache.poi.*,org.apache.xmlbeans.impl.schema,*'
 			}
 		}
 	}

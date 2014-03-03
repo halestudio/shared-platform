@@ -1,0 +1,5 @@
+platform {
+	bnd group: 'commons-configuration', name: 'commons-configuration', {
+		optionalImport 'org.apache.commons.jxpath', 'org.apache.commons.jxpath.*'
+	}
+}

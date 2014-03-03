@@ -1,0 +1,5 @@
+platform {
+	bnd group: 'xml-apis', name: 'xml-apis', {
+		instruction 'Private-Package', 'license' // we don't want to export 'license' as package
+	}
+}
