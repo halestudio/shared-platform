@@ -1,6 +1,7 @@
 interface Const {
 	static final String DEF_VERSION = '3.1.1.RELEASE'
 	static final String SPRING_GROUP = 'org.springframework'
+	static final String SECURITY_GROUP = 'org.springframework.security'
 }
 
 /**
@@ -12,7 +13,7 @@ def springCore(String springVersion = Const.DEF_VERSION) {
 	configurations {
 		platform {
 			resolutionStrategy.eachDependency {
-				if (it.requested.group == orientGroup) {
+				if (it.requested.group == Const.SPRING_GROUP || it.requested.group == Const.SECURITY_GROUP) {
 					it.useTarget(
 						group: it.requested.group,
 						name: it.requested.name,
@@ -39,10 +40,22 @@ def spring(String springVersion = Const.DEF_VERSION, List<String> modules = [
 	def springGroup = Const.SPRING_GROUP
 	springCore(springVersion)
 	
-	/*
-	 * XXX for some reason gradle has problems resolving the dependencies if no specific version is
-	 * given (even though for each dependency a fixed version should be applied via springCore(...))
-	 */
+	platform {
+		modules.each {
+			bundle group: springGroup, name: it, version: springVersion
+		}
+	}
+}
+
+/**
+ * Add spring core and a set of default bundles to the platform.
+ */
+def security(String springVersion = Const.DEF_VERSION, List<String> modules = [
+	'spring-security-core'
+]) {
+	def springGroup = Const.SECURITY_GROUP
+	springCore(springVersion)
+	
 	platform {
 		modules.each {
 			bundle group: springGroup, name: it, version: springVersion

@@ -1,0 +1,16 @@
+interface Const {
+	static final String GROUP = 'org.apache.wicket'
+}
+
+/**
+ * Add Apache Wicket modules.
+ */
+def wicket(String version = '6.14.0', List<String> modules = [
+	'wicket-core'
+]) {
+	platform {
+		modules.each {
+			bundle group: Const.GROUP, name: it, version: version
+		}
+	}
+}
