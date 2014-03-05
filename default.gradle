@@ -9,6 +9,6 @@ platform {
 		// sun.* and com.sun.* packages are optional by default
 		optionalImport 'sun.*', 'com.sun.*',
 			// unit tests only dependencies should be optional as well
-			'junit.framework', 'org.junit'
+			'junit.framework.*', 'org.junit.*'
 	}
 }
