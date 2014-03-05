@@ -1,0 +1,53 @@
+import static org.standardout.gradle.plugin.platform.internal.util.VersionUtil.toOsgiVersion
+
+/**
+ * Merged PostGIS and PostgreSQL driver bundle.
+ * 
+ * @param postgisVersion the version of the PostGIS JDBC driver
+ * @param postgresVersion the version of the PostgreSQL JDBC driver
+ * @param buddies the list of symbolic names of bundles that should be registered as buddies (Eclipse-RegisterBuddy)
+ */
+def postgis(String postgisVersion = '2.0.1', String postgresVersion = '9.2-1002-jdbc4', List<String> buddies = []) {
+	repositories {
+		maven {
+			// repo with (more or less current) PostGIS JDBC driver
+			url 'http://52north.org/maven/repo/releases/'
+		}
+	}
+	
+	dependencies {
+		platform "org.postgis:postgis-jdbc:$postgisVersion", {
+			exclude group: 'postgresql', module: 'postgresql'
+		}
+		platform "org.postgresql:postgresql:$postgresVersion"
+	}
+	
+	platform {
+		merge {
+			include group: 'org.postgresql', name: 'postgresql'
+			include group: 'org.postgis', name: 'postgis-jdbc'
+			
+			bnd {
+				bundleName = 'PostgreSQL and PostGIS JDBC Drivers'
+				symbolicName = 'org.postgresql.jdbc'
+				version = postgresVersion + '.postgis-' + postgisVersion
+				
+				if (buddies) {
+					// register buddy
+					instruction 'Eclipse-RegisterBuddy', buddies.join(',')
+					// add as optional required bundle
+					instruction 'Require-Bundle', buddies.collect{
+						it + ';resolution:=optional'
+					}.join(',')
+				}
+				
+				// package export
+				def pgv = toOsgiVersion(postgisVersion)
+				def psv = toOsgiVersion(postgresVersion)
+				instruction 'Export-Package',
+					"org.postgis;version:=$pgv,org.postgis.*;version:=$pgv," +
+					(properties['Export-Package']?:"*;version:=$psv")
+			}
+		}
+	}
+}
