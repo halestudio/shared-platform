@@ -1,5 +1,5 @@
 platform {
 	bnd 'org.apache.velocity:velocity', {
-		optionalImport 'com.werken.xpath', 'org.apache.log', 'org.apache.log.*'
+		optionalImport 'com.werken.xpath', 'org.apache.log', 'org.apache.log.*', 'org.apache.tools.ant.*'
 	}
 }
