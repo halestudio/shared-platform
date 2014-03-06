@@ -8,6 +8,20 @@ interface Const {
 def wicket(String version = '6.14.0', List<String> modules = [
 	'wicket-core'
 ]) {
+	configurations {
+		platform {
+			resolutionStrategy.eachDependency {
+				if (it.requested.group == Const.GROUP) {
+					it.useTarget(
+						group: it.requested.group,
+						name: it.requested.name,
+						version: version // fixed version for all wicket dependencies
+					)
+				}
+			}
+		}
+	}
+
 	platform {
 		modules.each {
 			bundle group: Const.GROUP, name: it, version: version
