@@ -1,0 +1,5 @@
+platform {
+	bnd(group: 'org.springframework.ldap', name: 'spring-ldap-core') {
+		optionalImport 'org.springframework.orm.hibernate3'
+	}
+}

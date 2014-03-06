@@ -1,0 +1,3 @@
+platform.bnd(group: 'com.github.sommeri', name: 'less4j') {
+	optionalImport 'com.beust.jcommander'
+}

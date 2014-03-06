@@ -1,0 +1,5 @@
+platform {
+	bnd(group: 'org.jasig.cas.client', name: 'cas-client-core') {
+		optionalImport 'org.opensaml'
+	}
+}
