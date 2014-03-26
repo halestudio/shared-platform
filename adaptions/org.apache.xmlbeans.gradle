@@ -1,5 +1,0 @@
-platform {
-	bnd 'org.apache.xmlbeans:xmlbeans', {
-		optionalImport 'org.apache.crimson.jaxp', 'org.apache.tools.ant.*'
-	}
-}

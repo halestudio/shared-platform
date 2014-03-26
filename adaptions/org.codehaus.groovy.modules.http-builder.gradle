@@ -1,5 +1,0 @@
-platform {
-	bnd group: 'org.codehaus.groovy.modules.http-builder', name: 'http-builder', {
-		optionalImport 'com.google.appengine.api.urlfetch', 'oauth.signpost', 'oauth.signpost.*'
-	}
-}

@@ -1,5 +1,0 @@
-platform {
-	bnd(group: 'org.quartz-scheduler', name: 'quartz') {
-		optionalImport 'javax.ejb', 'javax.jms', 'org.apache.commons.dbcp', 'org.apache.commons.modeler'
-	}
-}

@@ -1,5 +1,0 @@
-platform {
-	bnd(group: 'org.reflections', name: 'reflections') {
-		optionalImport 'com.google.gson'
-	}
-}

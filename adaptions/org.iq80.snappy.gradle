@@ -1,5 +1,0 @@
-platform {
-	bnd group: 'org.iq80.snappy', name: 'snappy', {
-		optionalImport 'org.apache.hadoop.io.compress'
-	}
-}

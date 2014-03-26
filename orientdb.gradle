@@ -65,9 +65,5 @@ def orientCore(String orientDBVersion = Const.DEF_VERSION) {
 				symbolicName = 'com.orientechnologies.common'
 			}
 		}
-		
-		bnd 'net.java.dev.jna:jna', {
-			// ensure bundle is wrapped to fix bundle version
-		}
 	}
 }

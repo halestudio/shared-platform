@@ -1,5 +1,0 @@
-platform {
-	bnd 'net.sf.ehcache:ehcache-core', {
-		optionalImport 'org.hibernate', 'org.hibernate.*' // make hibernate optional
-	}
-}

@@ -1,0 +1,5 @@
+platform {
+	imports(group: 'com.google.code.findbugs', name: 'jsr305') {
+		versionStrategy = MINIMUM
+	}
+}

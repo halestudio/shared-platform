@@ -1,5 +1,0 @@
-platform {
-	bnd group: 'org.apache.ant', name: 'ant', {
-		optionalImport 'gnu.gcj', 'kaffe.util', 'org.apache.harmony.luni.util', 'weblogic'
-	}
-}

@@ -1,0 +1,11 @@
+platform {
+	bnd 'net.java.dev.jna:jna:3.5.2', {
+		// ensure bundle is wrapped to fix bundle version
+		version = '3.5.2'
+	}
+	
+	imports 'net.java.dev.jna:jna', {
+		// the jna bundle provides no versions for exported packages
+		versionStrategy = NONE 
+	}
+}

@@ -1,5 +1,10 @@
-platform {
-	bnd(group: 'org.openid4java', name: 'openid4java-nodeps') {
-		optionalImport 'org.apache.axiom.om.*', 'org.eclipse.higgins.*', 'org.openxri.*'
+configurations {
+	platform {
+		resolutionStrategy.eachDependency {
+			if (it.requested.group == 'org.openid4java' && it.requested.name == 'openid4java-nodeps') {
+				// always use version w/ dependencies
+				it.useTarget group: it.requested.group, name: 'openid4java', version: it.requested.version
+			}
+		}
 	}
 }

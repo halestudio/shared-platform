@@ -54,6 +54,9 @@ def geotools(String geotoolsVersion = '10.4',
 				version = bundleVersion
 				instruction 'Export-Package', "org.geotools.*;version=$bundleVersion"
 				instruction 'Private-Package', '*'
+				// import eclipse xsd/emf w/o version (as the dependency does not export them)
+				instruction 'Import-Package', 'org.eclipse.xsd.*,org.eclipse.emf.*,' + 
+					(properties['Import-Package'])?:'*'
 			}
 		}
 		
