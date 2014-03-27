@@ -1,0 +1,7 @@
+platform {
+	bnd(group: 'org.apache.xmlbeans', name: 'xmlbeans') {
+		// only provide xmlbeans packages as exported packages
+		instruction 'Export-Package', "org.apache.xmlbeans.*;version=$version"
+		instruction 'Private-Package', '*'
+	}
+}

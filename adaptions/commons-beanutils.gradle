@@ -1,0 +1,10 @@
+platform {
+	bnd(group: 'commons-beanutils') {
+		// don't import commons collections classes from beanutils
+		instruction 'Export-Package', "!org.apache.commons.collections,*;version=$version"
+		optionalImport 'org.apache.commons.collections'
+	}
+	imports(group: 'commons-beanutils') {
+		versionStrategy = NONE // to fix possible commons collections imports based on this version
+	}
+}

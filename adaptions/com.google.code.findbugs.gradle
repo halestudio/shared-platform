@@ -1,5 +1,18 @@
 platform {
+	bnd(group: 'com.google.code.findbugs', name: 'jsr305') {
+		// extend the system bundle with the annotations provided in the jsr
+		instruction 'Fragment-Host', 'system.bundle;extension:=framework'
+	}
 	imports(group: 'com.google.code.findbugs', name: 'jsr305') {
-		versionStrategy = MINIMUM
+		versionStrategy = NONE
+	}
+	
+	bnd(group: 'com.google.code.findbugs', name: 'annotations') {
+		// don't export javax.annotation packages - if you need them, use jsr305 instead
+		instruction 'Export-Package', 'net.jcip.*,edu.umd.*'
+		instruction 'Private-Package', '*'
+	}
+	imports(group: 'com.google.code.findbugs', name: 'annotations') {
+		versionStrategy = NONE
 	}
 }

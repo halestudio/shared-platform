@@ -12,8 +12,11 @@ def poi(poiVersion = '3.9') {
 				symbolicName = 'org.apache.poi'
 				bundleName = 'Apache POI'
 				version = poiVersion
-				instruction 'Import-Package',
-					'!schemasMicrosoftComOfficePowerpoint,!schemasMicrosoftComOfficeWord,!org.openxmlformats.*,!org.apache.poi.*,org.apache.xmlbeans.impl.schema,*'
+				// only provide poi packages as exported packages
+				instruction 'Export-Package', "org.apache.poi.*;version=$version"
+				instruction 'Private-Package', '*'
+				// don't import any poi packages
+				prependImport '!org.apache.poi.*'
 			}
 		}
 	}
