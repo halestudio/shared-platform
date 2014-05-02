@@ -16,7 +16,7 @@ def poi(poiVersion = '3.9') {
 				instruction 'Export-Package', "org.apache.poi.*;version=$version"
 				instruction 'Private-Package', '*'
 				// don't import any poi packages
-				prependImport '!org.apache.poi.*'
+				prependImport '!org.apache.poi.*', 'org.apache.xmlbeans.impl.schema'
 			}
 		}
 	}
