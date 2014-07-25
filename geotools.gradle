@@ -28,44 +28,48 @@ def geotools(String geotoolsVersion = '10.4',
 	}
 	
 	platform {
-		// opengis
-		bundle "org.geotools:gt-opengis:${geotoolsVersion}", {
-			bnd {
-				symbolicName = 'org.opengis'
-			}
-		}
-		
-		// geotools dependencies
-		modules.each {
-			if (it != 'gt-opengis') {
-				bundle "org.geotools:${it}:${geotoolsVersion}"
-			}
-		}
-		
-		// geotools bundle
-		merge {
-			match {
-				it.group != null && it.group.startsWith('org.geotools') && it.name != 'gt-opengis'
+		feature id: 'platform.shared.geotools',
+				name: 'Geotools',
+				version: geotoolsVersion, {
+			// opengis
+			plugin "org.geotools:gt-opengis:${geotoolsVersion}", {
+				bnd {
+					symbolicName = 'org.opengis'
+				}
 			}
 			
-			bnd {
-				symbolicName = 'org.geotools'
-				bundleName = 'Geotools'
-				version = bundleVersion
-				instruction 'Export-Package', "org.geotools.*;version=$bundleVersion"
-				instruction 'Private-Package', '*'
-				
-				prependImport(
-					// import eclipse xsd/emf w/o version (as the dependency does not export them)
-					'org.eclipse.xsd.*', 'org.eclipse.emf.*,',
-					// add missing imports that result in class loading issues
-					'com.vividsolutions.jts.geom' // because the package is also included in the bundle! (EmptyGeometry)
-				)
+			// geotools dependencies
+			modules.each {
+				if (it != 'gt-opengis') {
+					plugin "org.geotools:${it}:${geotoolsVersion}"
+				}
 			}
+			
+			// geotools bundle
+			merge {
+				match {
+					it.group != null && it.group.startsWith('org.geotools') && it.name != 'gt-opengis'
+				}
+				
+				bnd {
+					symbolicName = 'org.geotools'
+					bundleName = 'Geotools'
+					version = bundleVersion
+					instruction 'Export-Package', "org.geotools.*;version=$bundleVersion"
+					instruction 'Private-Package', '*'
+					
+					prependImport(
+						// import eclipse xsd/emf w/o version (as the dependency does not export them)
+						'org.eclipse.xsd.*', 'org.eclipse.emf.*,',
+						// add missing imports that result in class loading issues
+						'com.vividsolutions.jts.geom' // because the package is also included in the bundle! (EmptyGeometry)
+					)
+				}
+			}
+			
+			// geotools depends on log4j
+			plugin group: 'log4j', name: 'log4j'
 		}
-		
-		// geotools depends on log4j
-		bundle group: 'log4j', name: 'log4j'
 	}
 }
 

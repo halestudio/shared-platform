@@ -28,7 +28,11 @@ def groovyAll(String groovyVersion = '2.1.5', boolean addDependency = true, Stri
 		}
 		
 		if (addDependency) {
-			bundle "org.codehaus.groovy:groovy-all:${groovyVersion}"
+			feature id: 'platform.shared.groovy-all',
+					name: 'Groovy complete',
+					version: groovyVersion, {
+				bundle "org.codehaus.groovy:groovy-all:${groovyVersion}"
+			}
 		}
 		
 		imports(group: 'org.codehaus.groovy') {

@@ -19,9 +19,13 @@ def modules(String version = Const.DEF_VERSION, List<String> modules = [
 	}
 	
 	platform {
-		modules.each {
-			bundle group: group, name: it, version: version, {
-				transitive = false // dependencies are messed up
+		feature id: 'platform.shared.gemini-blueprint',
+				name: 'Gemini Blueprint',
+				version: version, {
+			modules.each {
+				plugin group: group, name: it, version: version, {
+					transitive = false // dependencies are messed up
+				}
 			}
 		}
 	}

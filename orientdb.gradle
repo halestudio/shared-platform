@@ -16,7 +16,13 @@ def orientGraphDB(String orientDBVersion = Const.DEF_VERSION) {
 	orientCore(orientDBVersion)
 	
 	platform {
-		bundle group: Const.ORIENT_GROUP, name: 'orientdb-graphdb'
+		feature id: 'platform.shared.orientdb.graphdb',
+				name: 'OrientDB Graph DB',
+				version: orientDBVersion, {
+			bundle group: Const.ORIENT_GROUP, name: 'orientdb-graphdb'
+			
+			includes << 'platform.shared.orientdb.core'
+		}
 		
 		bnd group: 'com.tinkerpop.gremlin', name: 'gremlin-groovy', {
 			// adapt gremlin configuration
@@ -58,17 +64,21 @@ def orientCore(String orientDBVersion = Const.DEF_VERSION) {
 			instruction 'Export-Package', "com.orientechnologies.*;version=${orientDBVersion},*"
 		}
 		
-		bundle group: orientGroup, name: 'orientdb-core'
-		
-		/*
-		 * Commons and nativeos must share a classloader.
-		 */
-		merge {
-			bundle group: orientGroup, name: 'orient-commons'
-			bundle group: orientGroup, name: 'orientdb-nativeos'
-			bnd {
-				version = orientDBVersion
-				symbolicName = 'com.orientechnologies.common'
+		feature id: 'platform.shared.orientdb.core',
+				name: 'OrientDB core',
+				version: orientDBVersion, {
+			bundle group: orientGroup, name: 'orientdb-core'
+			
+			/*
+			 * Commons and nativeos must share a classloader.
+			 */
+			merge {
+				bundle group: orientGroup, name: 'orient-commons'
+				bundle group: orientGroup, name: 'orientdb-nativeos'
+				bnd {
+					version = orientDBVersion
+					symbolicName = 'com.orientechnologies.common'
+				}
 			}
 		}
 	}

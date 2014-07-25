@@ -15,38 +15,42 @@ def postgis(String postgisVersion = '2.0.1', String postgresVersion = '9.2-1002-
 		}
 	}
 	
-	dependencies {
-		platform "org.postgis:postgis-jdbc:$postgisVersion", {
-			exclude group: 'postgresql', module: 'postgresql'
-		}
-		platform "org.postgresql:postgresql:$postgresVersion"
-	}
-	
 	platform {
-		merge {
-			include group: 'org.postgresql', name: 'postgresql'
-			include group: 'org.postgis', name: 'postgis-jdbc'
+		def combinedVersion = postgresVersion + '.postgis-' + postgisVersion
+		
+		feature id: 'platform.shared.postgis',
+				name: 'PostgreSQL and PostGIS JDBC drivers', {
 			
-			bnd {
-				bundleName = 'PostgreSQL and PostGIS JDBC Drivers'
-				symbolicName = 'org.postgresql.jdbc'
-				version = postgresVersion + '.postgis-' + postgisVersion
+			bundle "org.postgis:postgis-jdbc:$postgisVersion", {
+				exclude group: 'postgresql', module: 'postgresql'
+			}
+			bundle "org.postgresql:postgresql:$postgresVersion"
+					
+			merge {
+				include group: 'org.postgresql', name: 'postgresql'
+				include group: 'org.postgis', name: 'postgis-jdbc'
 				
-				if (buddies) {
-					// register buddy
-					instruction 'Eclipse-RegisterBuddy', buddies.join(',')
-					// add as optional required bundle
-					instruction 'Require-Bundle', buddies.collect{
-						it + ';resolution:=optional'
-					}.join(',')
+				bnd {
+					bundleName = 'PostgreSQL and PostGIS JDBC Drivers'
+					symbolicName = 'org.postgresql.jdbc'
+					version = combinedVersion
+					
+					if (buddies) {
+						// register buddy
+						instruction 'Eclipse-RegisterBuddy', buddies.join(',')
+						// add as optional required bundle
+						instruction 'Require-Bundle', buddies.collect{
+							it + ';resolution:=optional'
+						}.join(',')
+					}
+					
+					// package export
+					def pgv = toOsgiVersion(postgisVersion)
+					def psv = toOsgiVersion(postgresVersion)
+					instruction 'Export-Package',
+						"org.postgis;version:=$pgv,org.postgis.*;version:=$pgv," +
+						(properties['Export-Package']?:"*;version:=$psv")
 				}
-				
-				// package export
-				def pgv = toOsgiVersion(postgisVersion)
-				def psv = toOsgiVersion(postgresVersion)
-				instruction 'Export-Package',
-					"org.postgis;version:=$pgv,org.postgis.*;version:=$pgv," +
-					(properties['Export-Package']?:"*;version:=$psv")
 			}
 		}
 	}

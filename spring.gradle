@@ -25,7 +25,11 @@ def springCore(String springVersion = Const.DEF_VERSION) {
 	}
 	
 	platform {
-		bundle group: springGroup, name: 'spring-core', version: springVersion
+		feature id: 'platform.shared.spring.core',
+				name: 'Spring Framework Core',
+				version: springVersion, {
+			bundle group: springGroup, name: 'spring-core', version: springVersion
+		}
 	}
 }
 
@@ -41,8 +45,14 @@ def spring(String springVersion = Const.DEF_VERSION, List<String> modules = [
 	springCore(springVersion)
 	
 	platform {
-		modules.each {
-			bundle group: springGroup, name: it, version: springVersion
+		feature id: 'platform.shared.spring.modules',
+				name: 'Spring Framework Modules',
+				version: springVersion, {
+			modules.each {
+				plugin group: springGroup, name: it, version: springVersion
+			}
+			
+			includes << 'platform.shared.spring.core'
 		}
 	}
 }
@@ -57,8 +67,14 @@ def security(String springVersion = Const.DEF_VERSION, List<String> modules = [
 	springCore(springVersion)
 	
 	platform {
-		modules.each {
-			bundle group: springGroup, name: it, version: springVersion
+		feature id: 'platform.shared.spring.security',
+				name: 'Spring Security',
+				version: springVersion, {
+			modules.each {
+				plugin group: springGroup, name: it, version: springVersion
+			}
+			
+			includes << 'platform.shared.spring.core'
 		}
 	}
 }

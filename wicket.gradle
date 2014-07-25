@@ -23,8 +23,12 @@ def wicket(String version = '6.14.0', List<String> modules = [
 	}
 
 	platform {
-		modules.each {
-			bundle group: Const.GROUP, name: it, version: version
+		feature id: 'platform.shared.wicket',
+				name: 'Apache Wicket',
+				version: version, {
+			modules.each {
+				plugin group: Const.GROUP, name: it, version: version
+			}
 		}
 	}
 }
