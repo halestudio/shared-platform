@@ -5,22 +5,24 @@
  * @param groovyVersion the groovy artifact version
  * @param addDependency if the dependency to groovy-all should be added
  * @param customName a custom name for the created bundle
+ * @param indy if the invoke dynamic version should be used
  */
-def groovyAll(String groovyVersion = '2.1.5', boolean addDependency = true, String customName = null) {
+def groovyAll(String groovyVersion = '2.1.5', boolean addDependency = true, String customName = null, boolean indy = false) {
 	configurations {
 		platform {
 			// groovy
 			resolutionStrategy.eachDependency {
 				if (it.requested.group == 'org.codehaus.groovy') {
 					// always use groovy-all instead of (groovy-*)
-					it.useTarget "org.codehaus.groovy:groovy-all:${groovyVersion}"
+					it.useTarget "org.codehaus.groovy:groovy-all:${groovyVersion}${indy ? ':indy' : ''}"
 				}
 			}
 		}
 	}
 	
 	platform {
-		if (customName) {
+		//XXX custom name currently not supported when using classifier (problem with bnd-platform)
+		if (customName && !indy) {
 			// custom symbolic name
 			bnd('org.codehaus.groovy:groovy-all') {
 				symbolicName = customName
@@ -31,7 +33,7 @@ def groovyAll(String groovyVersion = '2.1.5', boolean addDependency = true, Stri
 			feature id: 'platform.shared.groovy-all',
 					name: 'Groovy complete',
 					version: groovyVersion, {
-				bundle "org.codehaus.groovy:groovy-all:${groovyVersion}"
+				bundle "org.codehaus.groovy:groovy-all:${groovyVersion}${indy ? ':indy' : ''}"
 			}
 		}
 		
