@@ -14,6 +14,7 @@ def groovyAll(String groovyVersion = '2.1.5', boolean addDependency = true, Stri
 			resolutionStrategy.eachDependency {
 				if (it.requested.group == 'org.codehaus.groovy') {
 					// always use groovy-all instead of (groovy-*)
+					//XXX classifier seems to be ignored here -> normal groovy-all will be added
 					it.useTarget "org.codehaus.groovy:groovy-all:${groovyVersion}${indy ? ':indy' : ''}"
 				}
 			}
@@ -21,7 +22,6 @@ def groovyAll(String groovyVersion = '2.1.5', boolean addDependency = true, Stri
 	}
 	
 	platform {
-		//XXX custom name currently not supported when using classifier (problem with bnd-platform)
 		if (customName && !indy) {
 			// custom symbolic name
 			bnd('org.codehaus.groovy:groovy-all') {
@@ -29,11 +29,18 @@ def groovyAll(String groovyVersion = '2.1.5', boolean addDependency = true, Stri
 			}
 		}
 		
-		if (addDependency) {
+		if (addDependency || indy) {
 			feature id: 'platform.shared.groovy-all',
 					name: 'Groovy complete',
 					version: groovyVersion, {
-				bundle "org.codehaus.groovy:groovy-all:${groovyVersion}${indy ? ':indy' : ''}"
+				bundle "org.codehaus.groovy:groovy-all:${groovyVersion}${indy ? ':indy' : ''}", {
+					bnd {
+						instruction '-removeheaders', 'Require-Capability'
+						if (customName) {
+							symbolicName = customName
+						}
+					}
+				}
 			}
 		}
 		
