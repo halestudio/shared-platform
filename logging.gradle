@@ -21,6 +21,9 @@ def slf4jAndLogback(String slf4jVersion = '1.7.5', String logbackVersion = '1.0.
 					details.useTarget "org.slf4j:log4j-over-slf4j:${slf4jVersion}"
 				}
 			}
+
+			// exclude SLF4J over LOG4J - logback is used
+			exclude group: "org.slf4j", module: "slf4j-log4j12"
 		}
 	}
 	
