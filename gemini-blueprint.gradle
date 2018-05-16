@@ -14,7 +14,7 @@ def modules(String version = Const.DEF_VERSION, List<String> modules = [
 	
 	repositories {
 		maven {
-			url 'http://artifactory.esdi-humboldt.eu/artifactory/repo/'
+			url 'https://artifactory.wetransform.to/artifactory/libs-release/'
 		}
 	}
 	
