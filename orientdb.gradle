@@ -63,6 +63,10 @@ def orientCore(String orientDBVersion = Const.DEF_VERSION) {
 			instruction 'Import-Package', "com.orientechnologies.*;version=${orientDBVersion},*"
 			instruction 'Export-Package', "com.orientechnologies.*;version=${orientDBVersion},*"
 		}
+
+	        bnd name: 'concurrent', {
+        	        instruction '-removeheaders', 'Require-Capability'
+	        }
 		
 		feature id: 'platform.shared.orientdb.core',
 				name: 'OrientDB core',

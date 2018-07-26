@@ -28,6 +28,10 @@ def geotools(String geotoolsVersion = '10.4',
 	}
 	
 	platform {
+	        bnd group: 'xpp3', name: 'xpp3_min', {
+	                instruction '-removeheaders', 'Require-Capability'
+	        }
+
 		feature id: 'platform.shared.geotools',
 				name: 'Geotools',
 				version: geotoolsVersion, {
@@ -69,6 +73,7 @@ def geotools(String geotoolsVersion = '10.4',
 			
 			// geotools depends on log4j
 			plugin group: 'log4j', name: 'log4j'
+
 		}
 	}
 }
