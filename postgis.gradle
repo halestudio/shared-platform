@@ -7,13 +7,13 @@ import static org.standardout.gradle.plugin.platform.internal.util.VersionUtil.t
  * @param postgresVersion the version of the PostgreSQL JDBC driver
  * @param buddies the list of symbolic names of bundles that should be registered as buddies (Eclipse-RegisterBuddy)
  */
-def postgis(String postgisVersion = '2.0.1', String postgresVersion = '9.2-1002-jdbc4', List<String> buddies = []) {
-	repositories {
-		maven {
-			// repo with (more or less current) PostGIS JDBC driver
-			url 'http://52north.org/maven/repo/releases/'
-		}
-	}
+def postgis(String postgisVersion = '2.2.1', String postgresVersion = '42.2.4', List<String> buddies = []) {
+	// repositories {
+	// 	maven {
+	// 		// repo with (more or less current) PostGIS JDBC driver
+	// 		url 'http://52north.org/maven/repo/releases/'
+	// 	}
+	// }
 	
 	platform {
 		def combinedVersion = postgresVersion + '.postgis-' + postgisVersion
@@ -21,14 +21,14 @@ def postgis(String postgisVersion = '2.0.1', String postgresVersion = '9.2-1002-
 		feature id: 'platform.shared.postgis',
 				name: 'PostgreSQL and PostGIS JDBC drivers', {
 			
-			bundle "org.postgis:postgis-jdbc:$postgisVersion", {
+			bundle "net.postgis:postgis-jdbc:$postgisVersion", {
 				exclude group: 'postgresql', module: 'postgresql'
 			}
 			bundle "org.postgresql:postgresql:$postgresVersion"
 					
 			merge {
 				include group: 'org.postgresql', name: 'postgresql'
-				include group: 'org.postgis', name: 'postgis-jdbc'
+				include group: 'net.postgis', name: 'postgis-jdbc'
 				
 				bnd {
 					bundleName = 'PostgreSQL and PostGIS JDBC Drivers'
@@ -45,6 +45,7 @@ def postgis(String postgisVersion = '2.0.1', String postgresVersion = '9.2-1002-
 					}
 					
 					// package export
+					// XXX any way to find out the actual resolved version?
 					def pgv = toOsgiVersion(postgisVersion)
 					def psv = toOsgiVersion(postgresVersion)
 					instruction 'Export-Package',
