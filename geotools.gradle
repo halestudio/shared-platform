@@ -23,7 +23,7 @@ def geotools(String geotoolsVersion = '10.4',
 			url 'http://download.java.net/maven/2'
 		}
 		maven {
-			url 'http://repo.opengeo.org'
+			url 'https://repo.boundlessgeo.com/main/'
 		}
 	}
 	
