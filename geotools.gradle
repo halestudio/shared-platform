@@ -17,10 +17,7 @@ def geotools(String geotoolsVersion = '10.4',
 	
 	repositories {
 		maven {
-			url 'http://download.osgeo.org/webdav/geotools/'
-		}
-		maven {
-			url 'https://repo.boundlessgeo.com/main/'
+			url 'https://repo.osgeo.org/repository/release/'
 		}
 	}
 	
