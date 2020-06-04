@@ -56,11 +56,15 @@ def geotools(String geotoolsVersion = '10.4',
 					instruction 'Export-Package', "org.geotools.*;version=$bundleVersion"
 					instruction 'Private-Package', '*'
 					
+					def tokenizedVersion = geotoolsVersion.tokenize('.|-')
+					def majorVersion = tokenizedVersion[0] as int
+					def jtsGeomPackage = (majorVersion < 20) ? 'com.vividsolutions.jts.geom' : 'org.locationtech.jts.geom'
+
 					prependImport(
 						// import eclipse xsd/emf w/o version (as the dependency does not export them)
 						'org.eclipse.xsd.*', 'org.eclipse.emf.*,',
 						// add missing imports that result in class loading issues
-						'com.vividsolutions.jts.geom' // because the package is also included in the bundle! (EmptyGeometry)
+						jtsGeomPackage // because the package is also included in the bundle! (EmptyGeometry)
 					)
 				}
 			}
