@@ -43,6 +43,8 @@ def postgis(String postgisVersion = '2.2.1', String postgresVersion = '42.2.4', 
 							it + ';resolution:=optional'
 						}.join(',')
 					}
+
+					prependImport 'waffle.*;resolution:=optional'
 					
 					// package export
 					// XXX any way to find out the actual resolved version?
