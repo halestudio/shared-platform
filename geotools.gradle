@@ -41,6 +41,11 @@ def geotools(String geotoolsVersion = '10.4',
 				if (it != 'gt-opengis') {
 					plugin "org.geotools:${it}:${geotoolsVersion}"
 				}
+				else if (it == 'geotools') {
+					plugin "org.getools:${it}:${geotoolsVersion}", {
+						exclude group: 'com.github.spotbugs', module 'spotbugs-annotation'
+					}
+				}
 			}
 			
 			// geotools bundle
