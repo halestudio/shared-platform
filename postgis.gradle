@@ -50,6 +50,7 @@ def postgis(String postgisVersion = '2.2.1', String postgresVersion = '42.2.4', 
 					// XXX any way to find out the actual resolved version?
 					def pgv = toOsgiVersion(postgisVersion)
 					def psv = toOsgiVersion(postgresVersion)
+					prependImport "org.postgresql.*;version=$psv"
 					instruction 'Export-Package',
 						"org.postgis;version:=$pgv,org.postgis.*;version:=$pgv," +
 						(properties['Export-Package']?:"*;version:=$psv")
