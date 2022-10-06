@@ -19,7 +19,7 @@ def orientGraphDB(String orientDBVersion = Const.DEF_VERSION) {
 		feature id: 'platform.shared.orientdb.graphdb',
 				name: 'OrientDB Graph DB',
 				version: orientDBVersion, {
-			bundle group: Const.ORIENT_GROUP, name: 'orientdb-graphdb'
+			bundle group: Const.ORIENT_GROUP, name: 'orientdb-graphdb', version: '1.5.1'
 			
 			includes << 'platform.shared.orientdb.core'
 		}
@@ -36,24 +36,13 @@ def orientGraphDB(String orientDBVersion = Const.DEF_VERSION) {
  */
 def orientCore(String orientDBVersion = Const.DEF_VERSION) {
 	def orientGroup = Const.ORIENT_GROUP
-	
+
 	repositories {
+		maven { // wetransform artifactory
+			url 'https://artifactory.wetransform.to/artifactory/libs-release/'
+		}
 		maven {
 			url 'https://oss.sonatype.org/content/groups/public/'
-		}
-	}
-	
-	configurations {
-		platform {
-			resolutionStrategy.eachDependency {
-				if (it.requested.group == orientGroup) {
-					it.useTarget(
-						group: it.requested.group,
-						name: it.requested.name,
-						version: orientDBVersion // fixed version for all orient dependencies
-					)
-				}
-			}
 		}
 	}
 	
@@ -71,17 +60,18 @@ def orientCore(String orientDBVersion = Const.DEF_VERSION) {
 		feature id: 'platform.shared.orientdb.core',
 				name: 'OrientDB core',
 				version: orientDBVersion, {
-			bundle group: orientGroup, name: 'orientdb-core'
-			
+			bundle group: orientGroup, name: 'orientdb-core', version: '1.5.1'
+
 			/*
 			 * Commons and nativeos must share a classloader.
 			 */
 			merge {
-				bundle group: orientGroup, name: 'orient-commons'
-				bundle group: orientGroup, name: 'orientdb-nativeos'
+				bundle group: orientGroup, name: 'orient-commons', version: '1.5.3'
+				bundle group: orientGroup, name: 'orientdb-nativeos', version: '1.5.1'
 				bnd {
 					version = orientDBVersion
 					symbolicName = 'com.orientechnologies.common'
+					instruction '-removeheaders', 'Require-Capability'
 				}
 			}
 		}
