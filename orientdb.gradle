@@ -27,6 +27,7 @@ def orientGraphDB(String orientDBVersion = Const.DEF_VERSION) {
 		bnd group: 'com.tinkerpop.gremlin', name: 'gremlin-groovy', {
 			// adapt gremlin configuration
 			optionalImport 'com.tinkerpop.blueprints.impls.sail'
+			optionalImport 'jline'
 		}
 	}
 }
@@ -66,7 +67,9 @@ def orientCore(String orientDBVersion = Const.DEF_VERSION) {
 			 * Commons and nativeos must share a classloader.
 			 */
 			merge {
-				bundle group: orientGroup, name: 'orient-commons', version: '1.5.3'
+				// 1.5.5 is compiled with java 17
+				// 1.5.3 is compiled with java 18
+				bundle group: orientGroup, name: 'orient-commons', version: '1.5.5'
 				bundle group: orientGroup, name: 'orientdb-nativeos', version: '1.5.1'
 				bnd {
 					version = orientDBVersion

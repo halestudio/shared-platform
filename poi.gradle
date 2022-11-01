@@ -10,8 +10,11 @@ def poi(poiVersion = '5.2.3', poiOoxmlSchema = '4.1.2') {
 			merge(failOnDuplicate: false) {
 				bundle "org.apache.poi:poi:$poiVersion"
 				bundle "org.apache.poi:poi-ooxml:$poiVersion"
-				bundle "org.apache.poi:poi-ooxml-schemas:$poiOoxmlSchema"
-				
+//				using ooxml-schema give java.lang.NoSuchFieldError: Factory, https://stackoverflow.com/a/71545805
+				//bundle "org.apache.poi:poi-ooxml-schemas:$poiOoxmlSchema"
+				bundle "org.apache.poi:poi-ooxml-lite:$poiVersion"
+
+
 				bnd {
 					symbolicName = 'org.apache.poi'
 					bundleName = 'Apache POI'

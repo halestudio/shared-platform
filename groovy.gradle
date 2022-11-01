@@ -7,20 +7,15 @@
  * @param customName a custom name for the created bundle
  * @param indy if the invoke dynamic version should be used
  */
-def groovyAll(String groovyVersion = '4.0.1', boolean addDependency = true, String customName = null, boolean indy = false) {
+def groovyAll(String groovyVersion = '2.5.19', boolean addDependency = true, String customName = null, boolean indy = false) {
 	configurations {
 		platform {
 			// groovy
 			resolutionStrategy.eachDependency {
-				if (it.requested.group == 'org.apache.groovy' || it.requested.group == 'org.codehaus.groovy') {
-					// with Groovy 4.0.1, the group was changed from org.codehaus.groovy to org.apache.groovy
-					// also POM file for groovy-all in Groovy 2.4 https://search.maven.org/artifact/org.codehaus.groovy/groovy-all/2.4.20/pom
-					// contained dependencies to non-groovy libraries
-					// but POM for groovy-all 4.0.1 https://search.maven.org/artifact/org.apache.groovy/groovy-all/4.0.1/pom
-					// contains dependencies to individual groovy libraries so we must
-					// dynamically use package name (it.requested.name) instead of groovy-all otherwise it will result
-					// in stackoverflow exception
-					it.useTarget "org.apache.groovy:${it.requested.name}:${groovyVersion}"
+				if (it.requested.group == 'org.codehaus.groovy') {
+					// always use groovy-all instead of (groovy-*)
+					//XXX classifier seems to be ignored here -> normal groovy-all will be added
+					it.useTarget "org.codehaus.groovy:${it.requested.name}:${groovyVersion}"
 				}
 			}
 		}
@@ -29,12 +24,13 @@ def groovyAll(String groovyVersion = '4.0.1', boolean addDependency = true, Stri
 	platform {
 		if (customName && !indy) {
 			// custom symbolic name
-			bnd('org.apache.groovy:groovy-all') {
+			bnd('org.codehaus.groovy:groovy-all') {
 				symbolicName = customName
 			}
 		}
 
-		if (addDependency) {
+		if (addDependency || indy) {
+//		if (addDependency) {
 			feature id: 'platform.shared.groovy-all',
 					name: 'Groovy complete',
 					version: groovyVersion, {
@@ -50,9 +46,6 @@ def groovyAll(String groovyVersion = '4.0.1', boolean addDependency = true, Stri
 		}
 
 		imports(group: 'org.codehaus.groovy') {
-			versionStrategy = MINIMUM // assume that groovy is backwards compatible
-		}
-		imports(group: 'org.apache.groovy') {
 			versionStrategy = MINIMUM // assume that groovy is backwards compatible
 		}
 	}
