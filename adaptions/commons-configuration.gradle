@@ -2,5 +2,6 @@ platform {
 	bnd group: 'commons-configuration', name: 'commons-configuration', {
 		// make ant dependency optional
 		optionalImport 'org.apache.tools.ant.*'
+		optionalImport 'javax.sql.*'
 	}
 }

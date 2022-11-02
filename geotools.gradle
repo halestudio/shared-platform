@@ -19,6 +19,7 @@ def geotools(String geotoolsVersion = '10.4',
 		maven {
 			url 'https://repo.osgeo.org/repository/release/'
 		}
+//		mavenCentral()
 	}
 	
 	platform {

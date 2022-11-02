@@ -1,5 +1,5 @@
 interface Const {
-	static final String DEF_VERSION = '3.1.1.RELEASE'
+	static final String DEF_VERSION = '5.3.23'
 	static final String SPRING_GROUP = 'org.springframework'
 	static final String SECURITY_GROUP = 'org.springframework.security'
 }
@@ -73,7 +73,8 @@ def security(String springVersion = Const.DEF_VERSION, List<String> modules = [
 			modules.each {
 				plugin group: springGroup, name: it, version: springVersion
 			}
-			
+			// need to get rid of spring-jcl org.springframework.spring-jcl / org.springframework.spring-jcl
+
 			includes << 'platform.shared.spring.core'
 		}
 	}
