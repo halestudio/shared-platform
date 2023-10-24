@@ -11,7 +11,7 @@ def springCore(String springVersion = Const.DEF_VERSION) {
 	def springGroup = Const.SPRING_GROUP
 	
 	configurations {
-		platform {
+		bndplatform {
 			resolutionStrategy.eachDependency {
 				if (it.requested.group == Const.SPRING_GROUP || it.requested.group == Const.SECURITY_GROUP) {
 					it.useTarget(

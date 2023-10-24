@@ -9,7 +9,7 @@ def slf4jAndLogback(String slf4jVersion = '1.7.5', String logbackVersion = '1.0.
 		mavenCentral()
 	}
 	configurations {
-		platform {
+		bndplatform {
 			// resolution configuration for logging bridges (... over slf4j)
 			
 			resolutionStrategy.eachDependency { DependencyResolveDetails details ->

@@ -9,7 +9,7 @@ def wicket(String version = '6.14.0', List<String> modules = [
 	'wicket-core'
 ]) {
 	configurations {
-		platform {
+		bndplatform {
 			resolutionStrategy.eachDependency {
 				if (it.requested.group == Const.GROUP) {
 					it.useTarget(

@@ -9,7 +9,7 @@
  */
 def groovyAll(String groovyVersion = '2.5.19', boolean addDependency = true, String customName = null, boolean indy = false) {
 	configurations {
-		platform {
+		bndplatform {
 			// groovy
 			resolutionStrategy.eachDependency {
 				if (it.requested.group == 'org.codehaus.groovy') {

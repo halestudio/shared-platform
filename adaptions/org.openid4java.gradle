@@ -1,5 +1,5 @@
 configurations {
-	platform {
+	bndplatform {
 		resolutionStrategy.eachDependency {
 			if (it.requested.group == 'org.openid4java' && it.requested.name == 'openid4java-nodeps') {
 				// always use version w/ dependencies
